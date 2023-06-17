@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link href="styles/styles.css" rel="stylesheet">
+    <script src="vendors/jquery.js"></script>
+    <script src="script/client.js"></script>
+</head>
+<body>
+    <div>
+    <h1>Server Side Calculator</h1>
+</div>
+<div>
+<input type="number-input" placeholder="Enter a number" id="input-1"/>
+<button id = "add">+</button>
+<button id = "subtract">-</button>
+<button id = "multiply">*</button>
+<button id = "divide">/</button>
+<input type="number-input2" placeholder="Enter a number" id="input-2"/>
+<button id = "submit">=</button>
+<button id = "clear">C</button>
+</div>
+<div>
+    <span><h1>Total:</h1></span><h1 id = "calculated-number"></h1>
+</div>
+<div>
+    <h2>Calculated Number History</h2>
+    <ul id="number-history">
+</ul></div>
+</body>
+</html>
