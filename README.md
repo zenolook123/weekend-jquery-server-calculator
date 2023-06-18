@@ -27,7 +27,7 @@ npm install and find out there what was used.
 5. Get calculating
 
 ## Usage
-Useful for calculating things and keeping track of it
+Useful for calculating things and keeping track of it, user only has ability to post if all fields are not empty. Can also clear the history via clicking a button
 
 ## Built With
 Node,VSCode, Express, Body-Parser
