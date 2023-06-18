@@ -49,6 +49,19 @@ function refreshAndRender() {
         const number2 = $("#input-2").val();
         $("#calculated-number").empty()
         $("#calculated-number").append(response[response.length - 1])
+        if (operatorSelected == "add"){
+            operatorSelected = '+'
+        }
+        if (operatorSelected == "subtract"){
+            operatorSelected = '-'
+        }
+        if (operatorSelected == "multiply"){
+            operatorSelected = '*'
+        }
+        if (operatorSelected == "divide"){
+            operatorSelected = '/'
+        }
+    
         $("#number-history").append(`<li>${number1} ${operatorSelected} ${number2} = ${response[response.length - 1]}</li>`)
             $("#input-1").val('');
             $("#input-2").val('');
