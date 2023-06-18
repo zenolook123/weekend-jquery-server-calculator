@@ -11,6 +11,7 @@ function onReady() {
     $('#divide').on('click', setOperator)
     $('#submit').on('click',calculate)
     $('#clear').on('click', clearItem)
+    $('#clear-history').on('click', clearHistory)
 }
 function setOperator(event){
     operatorSelected = event.target.id
@@ -114,9 +115,18 @@ function pageRefresh() {
         alert(`request failed`, error)
     }
     )
-
-
 }
+
+function clearHistory() {
+    $.ajax({
+        url: '/completedEquationsHistory',
+        type: 'DELETE',
+        success: function(result) {
+            console.log("Success deleting history")
+        }
+    });
+}
+
 function clearItem(){
  $("#input-1").val('')
  $("#input-2").val('')

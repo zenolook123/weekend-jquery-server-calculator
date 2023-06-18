@@ -50,6 +50,10 @@ calculate(req.body.doMath.numberinput,req.body.doMath.numberinput2,req.body.doMa
 res.sendStatus(201)
 })
 
+app.delete('/completedEquationsHistory', function(req, res) {
+  completedEquationsHistory.length = 0;
+  res.sendStatus(204); 
+});
 
 
 
