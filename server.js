@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mathOperations = require('./server/modules/mathOperations');
 const completedCalculations = require('./server/modules/completedCalculations');
+const completedEquationsHistory = require('./server/modules/completedEquationsHistory')
 //Convention to have imports at the top of server
 const app = express();
 
@@ -12,15 +13,22 @@ const port = 5000;
 app.use(express.static('server/public'));
 
 app.use(bodyParser.urlencoded({extended: true}))
-
-
-
   
 
 app.get('/mathoperation', function(req, res) {
   console.log('Request for /math was made');
   res.send(completedCalculations);
 })
+
+app.get('/completedEquationsHistory', function(req, res) {
+  console.log('Request for /completedEquationsHistory was made');
+  res.send(completedEquationsHistory.completedEquation);
+});
+
+app.post('/completedEquationsHistory', function(req, res) {
+  completedEquationsHistory.completedEquation.push(req.body.completedEquation);
+  res.sendStatus(201);
+});
 
 app.post('/mathoperation', function(req, res){
 function calculate(firstNumber,secondNumber,operation,total) {

@@ -4,6 +4,7 @@ operatorSelected = event.target.id
 function onReady() {
     operatorSelected = 0
     refreshAndRender()
+
     $('#add').on('click', setOperator)
     $('#subtract').on('click', setOperator)
     $('#multiply').on('click', setOperator)
@@ -43,15 +44,17 @@ function calculate(){
 }
 
 function refreshAndRender() {
+    
     $.ajax({
         method: 'GET',
         url: '/mathoperation' 
     }).then(function(response){
+        
         const number1 = $("#input-1").val();
         const number2 = $("#input-2").val();
-        if (operatorSelected != 0) {
         $("#calculated-number").empty()
         $("#calculated-number").append(response[response.length - 1])
+      
         if (operatorSelected == "add"){
             operatorSelected = '+'
         }
@@ -64,16 +67,41 @@ function refreshAndRender() {
         if (operatorSelected == "divide"){
             operatorSelected = '/'
         }
-        $("#number-history").append(`<li>${number1} ${operatorSelected} ${number2} = ${response[response.length - 1]}</li>`)
-            $("#input-1").val('');
-            $("#input-2").val('');
-        } else {
-            return
-        }
+
+        if (operatorSelected != 0) {
+                $("#number-history").append(`<li>${number1} ${operatorSelected} ${number2} = ${response[response.length - 1]}</li>`)
+                postToCompletedCalculations(number1,number2,operatorSelected,response[response.length - 1])
+                console.log("Function Pushed to Page")
+                $("#input-1").val('');
+                $("#input-2").val('');
+        }  for (const equation of completedEquation) {
+            $("#number-history").append(`<li>${equation.numberinput} ${equation.operation} ${equation.numberinput2} = ${equation.total}</li>`);
+          }
     }).catch(function(error) {
         alert(`request failed`, error)
     }
     )
+}
+
+function postToCompletedCalculations(number1,number2,operatorSelected,final) {
+    $.ajax({
+        method: 'POST',
+        // The URL should match the server route where the request will be handled
+        url: '/completedEquationsHistory',
+        data: {
+            completedEquation: {
+                numberinput: number1,
+                numberinput2: number2,
+                operation: operatorSelected,
+                total:final
+            }
+        }
+    }).then(function(response) {
+        console.log("Success Pushed To completed equations!", response);
+    }).catch(function(error) {
+        alert("Something went wrong. Please try again later.");
+        console.log(error);
+    });
 }
 
 function clearItem(){
