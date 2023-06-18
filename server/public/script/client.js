@@ -3,7 +3,7 @@ operatorSelected = event.target.id
 
 function onReady() {
     operatorSelected = 0
-    refreshAndRender()
+    pageRefresh()
 
     $('#add').on('click', setOperator)
     $('#subtract').on('click', setOperator)
@@ -49,12 +49,10 @@ function refreshAndRender() {
         method: 'GET',
         url: '/mathoperation' 
     }).then(function(response){
-        
         const number1 = $("#input-1").val();
         const number2 = $("#input-2").val();
         $("#calculated-number").empty()
-        $("#calculated-number").append(response[response.length - 1])
-      
+
         if (operatorSelected == "add"){
             operatorSelected = '+'
         }
@@ -69,6 +67,7 @@ function refreshAndRender() {
         }
 
         if (operatorSelected != 0) {
+                $("#calculated-number").append(response[response.length - 1])
                 $("#number-history").append(`<li>${number1} ${operatorSelected} ${number2} = ${response[response.length - 1]}</li>`)
                 postToCompletedCalculations(number1,number2,operatorSelected,response[response.length - 1])
                 console.log("Function Pushed to Page")
@@ -101,7 +100,23 @@ function postToCompletedCalculations(number1,number2,operatorSelected,final) {
         console.log(error);
     });
 }
+function pageRefresh() {
+    $.ajax({
+        method: 'GET',
+        url: '/completedEquationsHistory' 
+    }).then(function(response){
+       for (object of response) {
+        console.log(object)
+        $("#number-history").append(`<li>${object.numberinput} ${object.operation} ${object.numberinput2} = ${object.total}</li>`)
+       }
+       $("#calculated-number").append('Type in the inputs above and get calculating!')
+    }).catch(function(error) {
+        alert(`request failed`, error)
+    }
+    )
 
+
+}
 function clearItem(){
  $("#input-1").val('')
  $("#input-2").val('')
