@@ -1,7 +1,6 @@
 $(document).ready(onReady)
 operatorSelected = event.target.id
-let functionUsed = undefined
-let total = undefined
+
 function onReady() {
     $('#add').on('click', setOperator)
     $('#subtract').on('click', setOperator)
@@ -34,8 +33,6 @@ function calculate(){
         }
     }).then(function(response) {
         console.log("Success!", response);
-        $("#input-1").val('');
-        $("#input-2").val('');
         refreshAndRender()
     }).catch(function(error) {
         alert("Something went wrong. Please try again later.");
@@ -48,13 +45,13 @@ function refreshAndRender() {
         method: 'GET',
         url: '/mathoperation' 
     }).then(function(response){
-        $("#number-history").empty()
+        const number1 = $("#input-1").val();
+        const number2 = $("#input-2").val();
         $("#calculated-number").empty()
-        for (item of response) {
-            $("#number-history").append(`<li>${item}</li>`)
-        }
-            $("#calculated-number").append(item)
-  
+        $("#calculated-number").append(response[response.length - 1])
+        $("#number-history").append(`<li>${number1} ${operatorSelected} ${number2} = ${response[response.length - 1]}</li>`)
+            $("#input-1").val('');
+            $("#input-2").val('');
     }).catch(function(error) {
         alert(`request failed`, error)
     }
