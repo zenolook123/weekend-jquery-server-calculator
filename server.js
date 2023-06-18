@@ -22,11 +22,11 @@ app.get('/mathoperation', function(req, res) {
 
 app.get('/completedEquationsHistory', function(req, res) {
   console.log('Request for /completedEquationsHistory was made');
-  res.send(completedEquationsHistory.completedEquation);
+  res.send(completedEquationsHistory);
 });
 
 app.post('/completedEquationsHistory', function(req, res) {
-  completedEquationsHistory.completedEquation.push(req.body.completedEquation);
+  completedEquationsHistory.push(req.body.completedEquation);
   res.sendStatus(201);
 });
 

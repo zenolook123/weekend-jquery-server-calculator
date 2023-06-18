@@ -74,9 +74,7 @@ function refreshAndRender() {
                 console.log("Function Pushed to Page")
                 $("#input-1").val('');
                 $("#input-2").val('');
-        }  for (const equation of completedEquation) {
-            $("#number-history").append(`<li>${equation.numberinput} ${equation.operation} ${equation.numberinput2} = ${equation.total}</li>`);
-          }
+        } 
     }).catch(function(error) {
         alert(`request failed`, error)
     }
