@@ -52,8 +52,7 @@ function refreshAndRender() {
     }).then(function(response){
         const number1 = $("#input-1").val();
         const number2 = $("#input-2").val();
-        $("#calculated-number").empty()
-
+       
         if (operatorSelected == "add"){
             operatorSelected = '+'
         }
@@ -67,13 +66,14 @@ function refreshAndRender() {
             operatorSelected = '/'
         }
 
-        if (operatorSelected != 0) {
+        if (operatorSelected != 0 && number1 != "" && number2 != '') {
+                $("#calculated-number").empty()
                 $("#calculated-number").append(response[response.length - 1])
                 $("#number-history").append(`<li>${number1} ${operatorSelected} ${number2} = ${response[response.length - 1]}</li>`)
                 postToCompletedCalculations(number1,number2,operatorSelected,response[response.length - 1])
                 console.log("Function Pushed to Page")
                 $("#input-1").val('');
-                $("#input-2").val('');
+                $("#input-2").val(''); 
         } 
     }).catch(function(error) {
         alert(`request failed`, error)
