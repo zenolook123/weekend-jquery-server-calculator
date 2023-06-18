@@ -2,6 +2,8 @@ $(document).ready(onReady)
 operatorSelected = event.target.id
 
 function onReady() {
+    operatorSelected = 0
+    refreshAndRender()
     $('#add').on('click', setOperator)
     $('#subtract').on('click', setOperator)
     $('#multiply').on('click', setOperator)
@@ -47,6 +49,7 @@ function refreshAndRender() {
     }).then(function(response){
         const number1 = $("#input-1").val();
         const number2 = $("#input-2").val();
+        if (operatorSelected != 0) {
         $("#calculated-number").empty()
         $("#calculated-number").append(response[response.length - 1])
         if (operatorSelected == "add"){
@@ -61,10 +64,12 @@ function refreshAndRender() {
         if (operatorSelected == "divide"){
             operatorSelected = '/'
         }
-    
         $("#number-history").append(`<li>${number1} ${operatorSelected} ${number2} = ${response[response.length - 1]}</li>`)
             $("#input-1").val('');
             $("#input-2").val('');
+        } else {
+            return
+        }
     }).catch(function(error) {
         alert(`request failed`, error)
     }
